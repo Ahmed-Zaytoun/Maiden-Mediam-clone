@@ -11,11 +11,11 @@ export class ArticlesService {
   }
 
   findAll() {
-    return `This action returns all articles`;
+    return this.prisma.article.findMany({ where: { published: true } });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} article`;
+  async findOne(id: number) {
+    return await this.prisma.article.findUnique({ where: { id } });
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {
