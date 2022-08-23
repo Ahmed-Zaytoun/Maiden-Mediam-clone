@@ -8,20 +8,26 @@ import {
   Delete,
   NotFoundException,
 } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { ArticleEntity } from './entities/article.entity';
 
+@ApiTags('Articles')
 @Controller('articles')
 export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Post()
+  @ApiCreatedResponse({ type: ArticleEntity })
   create(@Body() createArticleDto: CreateArticleDto) {
     return this.articlesService.create(createArticleDto);
   }
 
   @Get()
+  // @ApiCreatedResponse({ type: ArticleEntity, isArray: true })
+  @ApiOkResponse({ type: ArticleEntity, isArray: true })
   findAll() {
     return this.articlesService.findAll();
   }
